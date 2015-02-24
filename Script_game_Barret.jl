@@ -3,7 +3,7 @@ using PyCall
 
 sender = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
 receiver = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
-successful_act=[1,2,3,4]
+successful_act=[1 2 3 4]
 num_trials=100
 
 #function weight: 
