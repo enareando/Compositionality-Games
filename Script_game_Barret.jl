@@ -1,10 +1,12 @@
+module Barrett
+
 using PyCall
 @pyimport bisect as pybisect
 
-sender = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
-receiver = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
-successful_act=[1 2 3 4]
-num_trials=100
+global const init_sender = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
+global const init_receiver = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
+global const successful_act=[1 2 3 4]
+num_trials=1000
 
 #function weight: 
 function weighted_rand_choice (weights)
@@ -15,12 +17,13 @@ function weighted_rand_choice (weights)
         running_cumulative =running_cumulative + w
         push!(cumulative, running_cumulative)
     end
-    rnd= rand(1:cumulative[length(cumulative)])
-     return pybisect.bisect_left(cumulative, rnd, lo=1)
+    # println(cumulative)
+    rnd = rand(1:cumulative[length(cumulative)])
+     return pybisect.bisect_left(cumulative, rnd) + 1
 end
     
 #function game: hace una partida del juego
-function game (maxinum)
+function round_of_game (maxinum, sender, receiver)
     #println ("sender_i: ", sender)
     state= rand(1:4)
    #println ("state: ", state)
@@ -54,13 +57,19 @@ function game (maxinum)
             receiver[message,act]= receiver[message,act]-1
         end
     end
+    return sender, receiver
 end
 
 #loop:
-for i=1:num_trials
-    game(500)
-    println ("i: ", i)
+function game(num_trials)
+    sender = init_sender
+    receiver = init_receiver
+        for i=1:num_trials
+            sender, receiver = round_of_game(500, sender, receiver)
+        end
     println ("sender: ", sender) 
     println ("receiver: ", receiver)
+ end
+
 end
-    
+
