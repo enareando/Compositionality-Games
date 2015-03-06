@@ -62,8 +62,8 @@ end
 
 #loop:
 function game(num_trials)
-    sender = init_sender
-    receiver = init_receiver
+    sender = copy(init_sender)
+    receiver = copy (init_receiver)
         for i=1:num_trials
             sender, receiver = round_of_game(500, sender, receiver)
         end
