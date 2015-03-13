@@ -7,6 +7,7 @@ global const init_sender = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
 global const init_receiver = [1 1 1 1; 1 1 1 1; 1 1 1 1; 1 1 1 1]
 global const successful_act=[1 2 3 4]
 num_trials=1000
+num_games=2
 
 #function weight: 
 function weighted_rand_choice (weights)
@@ -60,16 +61,27 @@ function round_of_game (maxinum, sender, receiver)
     return sender, receiver
 end
 
-#loop:
+#loop un juego:
 function game(num_trials)
     sender = copy(init_sender)
     receiver = copy (init_receiver)
         for i=1:num_trials
             sender, receiver = round_of_game(500, sender, receiver)
         end
-    println ("sender: ", sender) 
-    println ("receiver: ", receiver)
+    return sender, receiver
+   # println ("sender: ", sender) 
+    #println ("receiver: ", receiver)
  end
+#para que haga muchos juegos paralelos y los guarde en un tuple
 
+function rep(num_repeat)
+    tuple_fin = {i => Barrett.game(1000) for i = 1:num_repeat}
+    return tuple_fin
 end
+
+  
+end
+
+
+
 
