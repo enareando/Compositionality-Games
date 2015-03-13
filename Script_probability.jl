@@ -16,9 +16,16 @@ end
     ms=mapslices(Stat.prob, sender ,2) 
     mr=mapslices(Stat.prob, receiver ,2) 
     probab=0.25*ms*mr
+
 #end
 
 
 end
+#para sumar pero no funciona
+succesful_act=[1 2 3 4]
+i=1
+resultado=Float64()
+push!(resultado, Stat.probab[i, succesful_act[i]])
+
 
 
