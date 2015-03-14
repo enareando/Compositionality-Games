@@ -1,10 +1,22 @@
 module Stat
+using Barrett
 
-sender= [1 1 1 399; 1 1 453 1; 1 324 1 1; 456 1 1 1]
-receiver=[ 1 1 1 399; 1 1 453 1; 1 324 1 1; 234 1 1 1]
-matrix= Float64[] 
-num_games=1000
+
+#para que me de la probabilidad de muchos juegos en un array
+matrix= Any[] 
+num_games=2
 succesful_act=[1 2 3 4]
+
+function prob_muchos(num_games)#aun no funciona esta función...
+	res=copy(matrix)
+	for i=1:num_games
+		tuple=Barrett.rep(num_games)
+		sender= tuple[i][1]
+		receiver=tuple[i][2]
+		p=push!(res, Stat.product (sender,receiver))
+	end
+        return p
+end
 
 #para sacar la probabilidad de una sola fila
 
@@ -12,7 +24,7 @@ function prob(sender)
     sender/sum(sender)
 end
 
-#te da la probabilidad del succesful_act
+#te da la probabilidad del succesful_actpe
 function product(sender,receiver)
     ms=mapslices(Stat.prob, sender ,2) 
     mr=mapslices(Stat.prob, receiver ,2) 
@@ -21,8 +33,7 @@ function product(sender,receiver)
     for i=1:length(succesful_act)
         push!(resultado, probab[i, succesful_act[i]])
     end
-    return p= sum(resultado)
-   
+    return sum(resultado)
 end
 
 
