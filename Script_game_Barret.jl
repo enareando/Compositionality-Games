@@ -1,3 +1,4 @@
+#!/usr/bin/env julia
 module Barrett
 
 using PyCall
